@@ -60,7 +60,7 @@ const Header: React.FC = () => {
           onClick={() => scrollToSection('home')}
           style={{ cursor: 'pointer' }}
         >
-          Tafsir Diallo
+          Mamadou Tafsir Diallo
         </div>
         
         {/* Desktop Navigation */}

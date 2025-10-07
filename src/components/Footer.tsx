@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
             <div className="footer-brand">
               <div className="footer-logo">
                 <span className="logo-icon">🏥</span>
-                <span className="logo-text">Tafsir Diallo</span>
+                <span className="logo-text">Mamadou Tafsir Diallo</span>
               </div>
               <p className="footer-tagline">
                 {currentLanguage === 'fr' 
@@ -252,7 +252,7 @@ const Footer: React.FC = () => {
                   📧 {currentLanguage === 'fr' ? 'Contactez-moi' : 'Contact Me'}
                 </a>
                 <a 
-                  href="https://calendly.com/diallotafsir52"
+                  href="https://calendly.com/diallotafsir52/30min"
                   className="btn btn-secondary"
                   target="_blank"
                   rel="noopener noreferrer"

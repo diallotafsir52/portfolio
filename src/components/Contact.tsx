@@ -494,7 +494,7 @@ const Contact: React.FC = () => {
               <a href="mailto:diallotafsir52@gmail.com" className="btn btn-primary">
                 📧 {currentLanguage === 'fr' ? 'Email direct' : 'Direct Email'}
               </a>
-              <a href="https://calendly.com/diallotafsir52" className="btn btn-secondary">
+              <a href="https://calendly.com/diallotafsir52/30min" className="btn btn-secondary">
                 📅 {currentLanguage === 'fr' ? 'Planifier un appel' : 'Schedule a Call'}
               </a>
             </div>
