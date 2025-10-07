@@ -1,15 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-interface ContactMethod {
-  id: string;
-  icon: string;
-  label: string;
-  value: string;
-  href: string;
-  description: string;
-  primary?: boolean;
-}
 
 
 const Contact: React.FC = () => {
@@ -34,19 +25,6 @@ const Contact: React.FC = () => {
     };
   }, []);
 
-  const contactMethods: ContactMethod[] = [
-    {
-      id: 'email',
-      icon: '📧',
-      label: t('contact.email'),
-      value: 'diallotafsir52@gmail.com',
-      href: 'mailto:diallotafsir52@gmail.com',
-      description: currentLanguage === 'fr' 
-        ? 'Réponse garantie sous 24h'
-        : 'Guaranteed response within 24h',
-      primary: true
-    }
-  ];
 
   const availability = {
     timezone: 'GMT+0 (Dakar)',
