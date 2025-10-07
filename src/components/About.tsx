@@ -134,7 +134,7 @@ const About: React.FC = () => {
     },
     {
       label: currentLanguage === 'fr' ? 'Expérience' : 'Experience',
-      value: '9+ Years',
+  value: '10+ Years',
       icon: '🎯'
     },
     {

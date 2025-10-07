@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <style jsx>{`
+      <style>{`
         .streamlined-footer {
           background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
           color: white;
@@ -442,13 +442,13 @@ const Footer: React.FC = () => {
                       ? 'Architecte de Solutions DHIS2'
                       : 'DHIS2 Solution Architect'
                     }
-                    <span className="stat-number">10+</span>
+                  </p>
                 </div>
               </div>
               <p className="footer-tagline">
                 {currentLanguage === 'fr'
-                  ? 'Expert en Systèmes d\'Information de Santé | 9+ années d\'expérience'
-                  : 'Health Information Systems Expert | 9+ years experience'
+                  ? 'Expert en Systèmes d\'Information de Santé | 10+ années d\'expérience'
+                  : 'Health Information Systems Expert | 10+ years experience'
                 }
               </p>
               <p className="footer-description">

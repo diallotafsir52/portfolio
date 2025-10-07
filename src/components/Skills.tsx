@@ -488,8 +488,8 @@ const Skills: React.FC = () => {
             </h3>
             <p>
               {currentLanguage === 'fr'
-                ? 'Avec 9+ années d\'expérience, je peux vous aider à optimiser vos systèmes de santé.'
-                : 'With 9+ years of experience, I can help optimize your health systems.'
+                ? 'Avec 10+ années d\'expérience, je peux vous aider à optimiser vos systèmes de santé.'
+                : 'With 10+ years of experience, I can help optimize your health systems.'
               }
             </p>
             <button 

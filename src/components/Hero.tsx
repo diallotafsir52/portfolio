@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
           
           <div className="stats-bar">
             <div className="stat-item">
-              <span className="stat-number">9+</span>
+              <span className="stat-number">10+</span>
               <span className="stat-label">
                 {currentLanguage === 'fr' ? 'Années d\'Expérience' : 'Years Experience'}
               </span>

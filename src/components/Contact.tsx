@@ -485,8 +485,8 @@ const Contact: React.FC = () => {
             </h3>
             <p>
               {currentLanguage === 'fr'
-                ? 'Avec 9+ années d\'expertise DHIS2 et des déploiements dans 11+ pays, je peux vous aider à atteindre vos objectifs de santé numérique.'
-                : 'With 9+ years of DHIS2 expertise and deployments across 11+ countries, I can help you achieve your digital health goals.'
+                ? 'Avec 10+ années d\'expertise DHIS2 et des déploiements dans 11+ pays, je peux vous aider à atteindre vos objectifs de santé numérique.'
+                : 'With 10+ years of DHIS2 expertise and deployments across 11+ countries, I can help you achieve your digital health goals.'
               }
             </p>
             
