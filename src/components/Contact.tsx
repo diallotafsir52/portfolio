@@ -11,290 +11,6 @@ interface ContactMethod {
   primary?: boolean;
 }
 
-interface FormData {
-  name: string;
-  email: string;
-  company: string;
-  projectType: string;
-  budget: string;
-  message: string;
-  timeline: string;
-}
-
-interface FormErrors {
-  [key: string]: string;
-}
-
-const ContactForm: React.FC = () => {
-  const { currentLanguage } = useLanguage();
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    company: '',
-    projectType: '',
-    budget: '',
-    message: '',
-    timeline: ''
-  });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = currentLanguage === 'fr' ? 'Le nom est requis' : 'Name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = currentLanguage === 'fr' ? 'L\'email est requis' : 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = currentLanguage === 'fr' ? 'Email invalide' : 'Invalid email';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = currentLanguage === 'fr' ? 'Le message est requis' : 'Message is required';
-    } else if (formData.message.length < 20) {
-      newErrors.message = currentLanguage === 'fr' 
-        ? 'Le message doit contenir au moins 20 caractères' 
-        : 'Message must be at least 20 characters';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
-
-    setIsSubmitting(true);
-    
-    try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would typically send the data to your backend
-      console.log('Form submitted:', formData);
-      
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        projectType: '',
-        budget: '',
-        message: '',
-        timeline: ''
-      });
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const projectTypes = [
-    { value: '', label: currentLanguage === 'fr' ? 'Sélectionnez un type' : 'Select project type' },
-    { value: 'dhis2-implementation', label: currentLanguage === 'fr' ? 'Implémentation DHIS2' : 'DHIS2 Implementation' },
-    { value: 'data-migration', label: currentLanguage === 'fr' ? 'Migration de données' : 'Data Migration' },
-    { value: 'system-integration', label: currentLanguage === 'fr' ? 'Intégration système' : 'System Integration' },
-    { value: 'training', label: currentLanguage === 'fr' ? 'Formation & support' : 'Training & Support' },
-    { value: 'consulting', label: currentLanguage === 'fr' ? 'Conseil technique' : 'Technical Consulting' },
-    { value: 'other', label: currentLanguage === 'fr' ? 'Autre' : 'Other' }
-  ];
-
-  const budgetRanges = [
-    { value: '', label: currentLanguage === 'fr' ? 'Sélectionnez un budget' : 'Select budget range' },
-    { value: 'under-25k', label: '< $25,000' },
-    { value: '25k-50k', label: '$25,000 - $50,000' },
-    { value: '50k-100k', label: '$50,000 - $100,000' },
-    { value: '100k-250k', label: '$100,000 - $250,000' },
-    { value: 'over-250k', label: '> $250,000' },
-    { value: 'discuss', label: currentLanguage === 'fr' ? 'À discuter' : 'Let\'s discuss' }
-  ];
-
-  const timelines = [
-    { value: '', label: currentLanguage === 'fr' ? 'Sélectionnez un délai' : 'Select timeline' },
-    { value: 'asap', label: currentLanguage === 'fr' ? 'Dès que possible' : 'ASAP' },
-    { value: '1-3-months', label: currentLanguage === 'fr' ? '1-3 mois' : '1-3 months' },
-    { value: '3-6-months', label: currentLanguage === 'fr' ? '3-6 mois' : '3-6 months' },
-    { value: '6-12-months', label: currentLanguage === 'fr' ? '6-12 mois' : '6-12 months' },
-    { value: 'flexible', label: currentLanguage === 'fr' ? 'Flexible' : 'Flexible' }
-  ];
-
-  return (
-    <form className="contact-form" onSubmit={handleSubmit}>
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="name">
-            {currentLanguage === 'fr' ? 'Nom complet' : 'Full Name'} *
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className={errors.name ? 'error' : ''}
-            placeholder={currentLanguage === 'fr' ? 'Votre nom' : 'Your name'}
-          />
-          {errors.name && <span className="error-message">{errors.name}</span>}
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="email">
-            {currentLanguage === 'fr' ? 'Adresse email' : 'Email Address'} *
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={errors.email ? 'error' : ''}
-            placeholder={currentLanguage === 'fr' ? 'votre@email.com' : 'your@email.com'}
-          />
-          {errors.email && <span className="error-message">{errors.email}</span>}
-        </div>
-      </div>
-
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="company">
-            {currentLanguage === 'fr' ? 'Organisation' : 'Organization'}
-          </label>
-          <input
-            type="text"
-            id="company"
-            name="company"
-            value={formData.company}
-            onChange={handleChange}
-            placeholder={currentLanguage === 'fr' ? 'Nom de votre organisation' : 'Your organization name'}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="projectType">
-            {currentLanguage === 'fr' ? 'Type de projet' : 'Project Type'}
-          </label>
-          <select
-            id="projectType"
-            name="projectType"
-            value={formData.projectType}
-            onChange={handleChange}
-          >
-            {projectTypes.map(type => (
-              <option key={type.value} value={type.value}>{type.label}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="budget">
-            {currentLanguage === 'fr' ? 'Budget estimé' : 'Estimated Budget'}
-          </label>
-          <select
-            id="budget"
-            name="budget"
-            value={formData.budget}
-            onChange={handleChange}
-          >
-            {budgetRanges.map(range => (
-              <option key={range.value} value={range.value}>{range.label}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="timeline">
-            {currentLanguage === 'fr' ? 'Délai souhaité' : 'Desired Timeline'}
-          </label>
-          <select
-            id="timeline"
-            name="timeline"
-            value={formData.timeline}
-            onChange={handleChange}
-          >
-            {timelines.map(timeline => (
-              <option key={timeline.value} value={timeline.value}>{timeline.label}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="message">
-          {currentLanguage === 'fr' ? 'Décrivez votre projet' : 'Describe your project'} *
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          className={errors.message ? 'error' : ''}
-          placeholder={currentLanguage === 'fr' 
-            ? 'Décrivez vos besoins, défis, et objectifs...'
-            : 'Describe your needs, challenges, and objectives...'
-          }
-          rows={5}
-        />
-        {errors.message && <span className="error-message">{errors.message}</span>}
-      </div>
-
-      <div className="form-submit">
-        <button 
-          type="submit" 
-          className="btn btn-primary" 
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <span>
-              <span className="spinner"></span>
-              {currentLanguage === 'fr' ? 'Envoi...' : 'Sending...'}
-            </span>
-          ) : (
-            <span>
-              📧 {currentLanguage === 'fr' ? 'Envoyer le message' : 'Send Message'}
-            </span>
-          )}
-        </button>
-
-        {submitStatus === 'success' && (
-          <div className="success-message">
-            ✅ {currentLanguage === 'fr' 
-              ? 'Message envoyé ! Je vous répondrai sous 24h.'
-              : 'Message sent! I\'ll respond within 24 hours.'
-            }
-          </div>
-        )}
-
-        {submitStatus === 'error' && (
-          <div className="error-message">
-            ❌ {currentLanguage === 'fr' 
-              ? 'Erreur lors de l\'envoi. Veuillez réessayer.'
-              : 'Error sending message. Please try again.'
-            }
-          </div>
-        )}
-      </div>
-    </form>
-  );
-};
 
 const Contact: React.FC = () => {
   const { t, currentLanguage } = useLanguage();
@@ -329,36 +45,6 @@ const Contact: React.FC = () => {
         ? 'Réponse garantie sous 24h'
         : 'Guaranteed response within 24h',
       primary: true
-    },
-    {
-      id: 'phone',
-      icon: '📱',
-      label: t('contact.phone'),
-      value: '+221 781453881',
-      href: 'tel:+221781453881',
-      description: currentLanguage === 'fr' 
-        ? 'WhatsApp disponible'
-        : 'WhatsApp available'
-    },
-    {
-      id: 'linkedin',
-      icon: '💼',
-      label: 'LinkedIn',
-      value: 'diallotafsir52',
-      href: 'https://www.linkedin.com/in/diallotafsir52/',
-      description: currentLanguage === 'fr' 
-        ? 'Reseau professionnel'
-        : 'Professional network'
-    },
-    {
-      id: 'location',
-      icon: '📍',
-      label: t('contact.location'),
-      value: t('contact.location.value'),
-      href: 'https://maps.google.com/?q=Dakar,Senegal',
-      description: currentLanguage === 'fr' 
-        ? 'Disponible à distance'
-        : 'Available remotely'
     }
   ];
 
@@ -379,148 +65,81 @@ const Contact: React.FC = () => {
           </p>
         </div>
 
-        <div className="contact-content">
-          <div className="contact-info">
-            <div className="contact-methods">
-              {contactMethods.map((method) => (
-                <a
-                  key={method.id}
-                  href={method.href}
-                  className={`contact-method ${method.primary ? 'primary' : ''}`}
-                  target={method.href.startsWith('http') ? '_blank' : undefined}
-                  rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                >
-                  <div className="method-icon">{method.icon}</div>
-                  <div className="method-content">
-                    <div className="method-label">{method.label}</div>
-                    <div className="method-value">{method.value}</div>
-                    <div className="method-description">{method.description}</div>
-                  </div>
-                  <div className="method-arrow">→</div>
-                </a>
-              ))}
-            </div>
 
-            <div className="availability-info">
-              <h3>
-                {currentLanguage === 'fr' ? 'Disponibilité' : 'Availability'}
-              </h3>
-              <div className="availability-grid">
-                <div className="availability-item">
-                  <span className="availability-icon">🕒</span>
-                  <div>
-                    <div className="availability-label">
-                      {currentLanguage === 'fr' ? 'Heures de travail' : 'Working Hours'}
-                    </div>
-                    <div className="availability-value">{availability.hours}</div>
-                    <div className="availability-note">{availability.timezone}</div>
-                  </div>
-                </div>
-
-                <div className="availability-item">
-                  <span className="availability-icon">⚡</span>
-                  <div>
-                    <div className="availability-label">
-                      {currentLanguage === 'fr' ? 'Temps de réponse' : 'Response Time'}
-                    </div>
-                    <div className="availability-value">{availability.response}</div>
-                  </div>
-                </div>
-
-                <div className="availability-item">
-                  <span className="availability-icon">🌍</span>
-                  <div>
-                    <div className="availability-label">
-                      {currentLanguage === 'fr' ? 'Langues' : 'Languages'}
-                    </div>
-                    <div className="availability-value">{availability.languages}</div>
-                  </div>
-                </div>
-
-                <div className="availability-item">
-                  <span className="availability-icon">🚀</span>
-                  <div>
-                    <div className="availability-label">
-                      {currentLanguage === 'fr' ? 'Disponibilité' : 'Availability'}
-                    </div>
-                    <div className="availability-value">
-                      {t('contact.availability.value')}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div style={{
+          maxWidth: 600,
+          margin: '0 auto',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          borderRadius: 20,
+          boxShadow: '0 4px 24px rgba(44,62,80,0.10)',
+          padding: '2.2rem 1.5rem 2rem',
+          textAlign: 'center',
+          color: '#fff',
+        }}>
+          <h3 style={{marginBottom: '1.2rem', color: '#fff', fontWeight: 700, fontSize: '2rem', letterSpacing: '-1px'}}>
+            {currentLanguage === 'fr' ? 'Contact' : 'Contact'}
+          </h3>
+          <p style={{color: '#fff', fontSize: '1.1rem', marginBottom: '2rem', fontWeight: 500}}>
+            {currentLanguage === 'fr'
+              ? "Prêt à transformer votre système d'information de santé ? Discutons de la façon dont je peux vous aider à atteindre vos objectifs."
+              : "Ready to transform your health information system? Let's discuss how I can help you achieve your goals."}
+          </p>
+          <div style={{marginBottom: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+            <a
+              href="mailto:diallotafsir52@gmail.com"
+              style={{
+                background: '#2563eb',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 24,
+                padding: '0.9rem 2.2rem',
+                fontWeight: 700,
+                fontSize: '1.1rem',
+                boxShadow: '0 2px 8px rgba(44,62,80,0.10)',
+                cursor: 'pointer',
+                transition: 'background 0.2s',
+                textDecoration: 'none',
+                display: 'inline-block',
+              }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📧 {currentLanguage === 'fr' ? 'Contactez-moi' : 'Contact Me'}
+            </a>
+            <a
+              href="https://calendly.com/diallotafsir52/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: '#fff',
+                color: '#2563eb',
+                border: 'none',
+                borderRadius: 24,
+                padding: '0.9rem 2.2rem',
+                fontWeight: 700,
+                fontSize: '1.1rem',
+                boxShadow: '0 2px 8px rgba(44,62,80,0.10)',
+                cursor: 'pointer',
+                transition: 'background 0.2s',
+                textDecoration: 'none',
+                display: 'inline-block',
+              }}
+            >
+              📅 {currentLanguage === 'fr' ? 'Prendre rendez-vous' : 'Schedule a Call'}
+            </a>
           </div>
-
-          <div className="contact-form-container">
-            <div className="form-header">
-              <h3>
-                {currentLanguage === 'fr' 
-                  ? 'Démarrons votre projet'
-                  : 'Let\'s start your project'
-                }
-              </h3>
-              <p>
-                {currentLanguage === 'fr'
-                  ? 'Partagez les détails de votre projet et recevez une réponse personnalisée sous 24h.'
-                  : 'Share your project details and receive a personalized response within 24h.'
-                }
-              </p>
-            </div>
-            
-            <ContactForm />
+          <div style={{color: '#e0e7ff', fontSize: '0.98rem', marginTop: 8, marginBottom: 8}}>
+            {currentLanguage === 'fr' ? 'Réponse garantie sous 24h' : 'Guaranteed response within 24h'}
           </div>
+          <ul style={{listStyle: 'none', padding: 0, margin: 0, color: '#e0e7ff', fontSize: '1.05rem', textAlign: 'left'}}>
+            <li style={{marginBottom: 6}}><b>{currentLanguage === 'fr' ? 'Heures de travail' : 'Working Hours'}:</b> {availability.hours} <span style={{color: '#c7d2fe'}}>{availability.timezone}</span></li>
+            <li style={{marginBottom: 6}}><b>{currentLanguage === 'fr' ? 'Temps de réponse' : 'Response Time'}:</b> {availability.response}</li>
+            <li style={{marginBottom: 6}}><b>{currentLanguage === 'fr' ? 'Langues' : 'Languages'}:</b> {availability.languages}</li>
+            <li><b>{currentLanguage === 'fr' ? 'Disponibilité' : 'Availability'}:</b> {t('contact.availability.value')}</li>
+          </ul>
         </div>
 
-        <div className={`contact-cta ${isInView ? 'visible' : ''}`}>
-          <div className="cta-background">
-            <div className="cta-shape"></div>
-          </div>
-          <div className="cta-content">
-            <h3>
-              {currentLanguage === 'fr' 
-                ? 'Prêt à transformer vos systèmes de santé ?'
-                : 'Ready to transform your health systems?'
-              }
-            </h3>
-            <p>
-              {currentLanguage === 'fr'
-                ? 'Avec 10+ années d\'expertise DHIS2 et des déploiements dans 11+ pays, je peux vous aider à atteindre vos objectifs de santé numérique.'
-                : 'With 10+ years of DHIS2 expertise and deployments across 11+ countries, I can help you achieve your digital health goals.'
-              }
-            </p>
-            
-            <div className="quick-contact">
-              <a href="mailto:diallotafsir52@gmail.com" className="btn btn-primary">
-                📧 {currentLanguage === 'fr' ? 'Email direct' : 'Direct Email'}
-              </a>
-              <a href="https://calendly.com/diallotafsir52/30min" className="btn btn-secondary">
-                📅 {currentLanguage === 'fr' ? 'Planifier un appel' : 'Schedule a Call'}
-              </a>
-            </div>
 
-            <div className="social-proof">
-              <div className="proof-item">
-                <span className="proof-icon">⭐</span>
-                <span className="proof-text">
-                  {currentLanguage === 'fr' ? 'Satisfaction client 100%' : '100% Client Satisfaction'}
-                </span>
-              </div>
-              <div className="proof-item">
-                <span className="proof-icon">🚀</span>
-                <span className="proof-text">
-                  {currentLanguage === 'fr' ? 'Projets livrés à temps' : 'On-time Project Delivery'}
-                </span>
-              </div>
-              <div className="proof-item">
-                <span className="proof-icon">🔒</span>
-                <span className="proof-text">
-                  {currentLanguage === 'fr' ? 'Confidentialité garantie' : 'Confidentiality Guaranteed'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
