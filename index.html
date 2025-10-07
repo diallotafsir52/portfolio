@@ -1,13 +1,1506 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mamadou Tafsir Diallo - DHIS2 Solution Architect</title>
+    <meta name="description" content="DHIS2 Solution Architect & Health Information Systems Expert with 9+ years experience across 11+ countries. Specialized in health data integration, cloud infrastructure, and humanitarian health operations.">
+    <meta name="keywords" content="DHIS2, Health Information Systems, Solution Architect, Health Data Integration, Humanitarian Health, Cloud Infrastructure, Senegal, ICRC, ALIMA">
+    <meta name="author" content="Mamadou Tafsir Diallo">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tafsirdiallo.com/">
+    <meta property="og:title" content="Mamadou Tafsir Diallo - DHIS2 Solution Architect">
+    <meta property="og:description" content="DHIS2 Solution Architect & Health Information Systems Expert with 9+ years experience across 11+ countries.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tafsirdiallo.com/">
+    <meta property="twitter:title" content="Mamadou Tafsir Diallo - DHIS2 Solution Architect">
+    <meta property="twitter:description" content="DHIS2 Solution Architect & Health Information Systems Expert with 9+ years experience across 11+ countries.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 0.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .lang-btn:not(.active) {
+            background: transparent;
+            color: #64748b;
+        }
+
+        .lang-btn:not(.active):hover {
+            background: #f1f5f9;
+            color: #2563eb;
+        }
+
+        /* Content visibility based on language */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        .lang-content.active.flex {
+            display: flex;
+        }
+
+        .lang-content.active.grid {
+            display: grid;
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #2563eb;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2563eb;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><path d="M0,50 Q250,0 500,50 T1000,50 L1000,100 L0,100 Z"/></svg>') repeat-x;
+            animation: wave 10s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1e293b;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .about-card h3 {
+            color: #2563eb;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p {
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover .project-header::before {
+            top: -30%;
+            right: -30%;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-subtitle {
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-details h4 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-details p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: #2563eb;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category h3::before {
+            content: '◆';
+            color: #7c3aed;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-level {
+            font-size: 0.8rem;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #2563eb, #7c3aed);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 45%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -30px;
+            border-left-color: white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -30px;
+            border-right-color: white;
+        }
+
+        .timeline-date {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-title {
+            color: #1e293b;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #2563eb;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-item {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-item p {
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .language-toggle {
+                top: 80px;
+                right: 10px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: calc(100% - 40px);
+                left: 40px !important;
+                text-align: left !important;
+            }
+
+            .timeline-item .timeline-content::before {
+                left: -30px !important;
+                border-right-color: white !important;
+                border-left-color: transparent !important;
+            }
+
+            .timeline-marker {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="lang-btn active" onclick="switchLanguage('en')" id="btn-en">EN</button>
+        <button class="lang-btn" onclick="switchLanguage('fr')" id="btn-fr">FR</button>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Tafsir Diallo</div>
+            <nav>
+                <!-- English Navigation -->
+                <ul class="nav-menu lang-content active" data-lang="en">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <!-- French Navigation -->
+                <ul class="nav-menu lang-content" data-lang="fr">
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#about">À Propos</a></li>
+                    <li><a href="#projects">Projets</a></li>
+                    <li><a href="#skills">Compétences</a></li>
+                    <li><a href="#experience">Expérience</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Mamadou Tafsir Diallo</h1>
+            
+            <!-- English Hero Content -->
+            <div class="lang-content active" data-lang="en">
+                <div class="hero-subtitle">DHIS2 Solution Architect & Health Information Systems Expert</div>
+                <div class="hero-description">"Transforming health data into actionable insights across humanitarian settings"</div>
+                
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-number">9+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">11+</span>
+                        <span class="stat-label">Countries Deployed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">Health Facilities</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Major Organizations</span>
+                    </div>
+                </div>
+                
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+
+            <!-- French Hero Content -->
+            <div class="lang-content" data-lang="fr">
+                <div class="hero-subtitle">Architecte de Solutions DHIS2 & Expert en Systèmes d'Information de Santé</div>
+                <div class="hero-description">"Transformer les données de santé en informations exploitables dans les contextes humanitaires"</div>
+                
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-number">9+</span>
+                        <span class="stat-label">Années d'Expérience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">11+</span>
+                        <span class="stat-label">Pays Déployés</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">Centres de Santé</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Grandes Organisations</span>
+                    </div>
+                </div>
+                
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">Voir Mon Travail</a>
+                    <a href="#contact" class="btn btn-secondary">Me Contacter</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <!-- English About -->
+            <div class="lang-content active" data-lang="en">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Who I Am</h3>
+                        <p>Seasoned IT professional with over 9 years of experience in health information systems, technical leadership, and digital operations within international humanitarian institutions. Currently serving as Solution Architect at ICRC, where I lead transformative health data initiatives.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>What I Do</h3>
+                        <p>I specialize in DHIS2 architecture, cloud infrastructure, and health data integration. My expertise spans from system design and implementation to training and capacity building, always focusing on improving health outcomes through technology.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>My Impact</h3>
+                        <p>I've successfully deployed health information systems across 11+ countries, migrated critical medical databases, and built solutions that directly support humanitarian health operations, improving data visibility and decision-making for thousands of health workers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- French About -->
+            <div class="lang-content" data-lang="fr">
+                <h2 class="section-title">À Propos de Moi</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Qui Je Suis</h3>
+                        <p>Professionnel IT expérimenté avec plus de 9 ans d'expérience dans les systèmes d'information de santé, le leadership technique et les opérations numériques au sein d'institutions humanitaires internationales. Actuellement Architecte de Solutions au CICR, où je dirige des initiatives transformatrices de données de santé.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>Ce Que Je Fais</h3>
+                        <p>Je me spécialise dans l'architecture DHIS2, l'infrastructure cloud et l'intégration de données de santé. Mon expertise s'étend de la conception et mise en œuvre de systèmes à la formation et au renforcement des capacités, toujours axé sur l'amélioration des résultats de santé par la technologie.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>Mon Impact</h3>
+                        <p>J'ai déployé avec succès des systèmes d'information de santé dans plus de 11 pays, migré des bases de données médicales critiques et construit des solutions qui soutiennent directement les opérations de santé humanitaire, améliorant la visibilité des données et la prise de décision pour des milliers de professionnels de santé.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <!-- English Projects -->
+            <div class="lang-content active" data-lang="en">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">HeMAP Migration</h3>
+                            <p class="project-subtitle">Medical Activity Database Transformation</p>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-details">
+                                <h4>Challenge</h4>
+                                <p>Migrate legacy Lotus Notes medical databases to modern DHIS2 platform for ICRC's Health Monitoring and Analysis Platform.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Solution</h4>
+                                <p>Led complete system migration with zero data loss, implemented ETL pipelines, and ensured seamless transition for field operations.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Impact</h4>
+                                <p>Streamlined health monitoring across all ICRC operations, improved data accessibility, and enhanced analytical capabilities.</p>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">DHIS2</span>
+                                <span class="tech-tag">SSIS</span>
+                                <span class="tech-tag">ETL Pipelines</span>
+                                <span class="tech-tag">Data Migration</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Multi-Country DHIS2 Deployment</h3>
+                            <p class="project-subtitle">ALIMA Health System Standardization</p>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-details">
+                                <h4>Challenge</h4>
+                                <p>Deploy unified DHIS2 infrastructure across 11 African countries while maintaining local customization requirements.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Solution</h4>
+                                <p>Designed scalable architecture, implemented standardized configurations, and provided comprehensive training programs.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Impact</h4>
+                                <p>Achieved unified health data collection across West Africa, improved inter-country collaboration and reporting consistency.</p>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">DHIS2</span>
+                                <span class="tech-tag">Cloud Infrastructure</span>
+                                <span class="tech-tag">Multi-tenancy</span>
+                                <span class="tech-tag">Training Programs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Pharmacy Stock Management</h3>
+                            <p class="project-subtitle">Supply Chain Optimization System</p>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-details">
+                                <h4>Challenge</h4>
+                                <p>Improve pharmaceutical supply chain visibility and reduce stockouts in humanitarian healthcare settings.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Solution</h4>
+                                <p>Built real-time stock monitoring system with automated alerts, order calculations, and predictive analytics.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Impact</h4>
+                                <p>Reduced stockouts by 40%, improved patient care continuity, and optimized inventory management processes.</p>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">DHIS2</span>
+                                <span class="tech-tag">API Integration</span>
+                                <span class="tech-tag">Real-time Analytics</span>
+                                <span class="tech-tag">Supply Chain</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- French Projects -->
+            <div class="lang-content" data-lang="fr">
+                <h2 class="section-title">Projets Phares</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Migration HeMAP</h3>
+                            <p class="project-subtitle">Transformation de Base de Données d'Activités Médicales</p>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-details">
+                                <h4>Défi</h4>
+                                <p>Migrer les bases de données médicales héritées de Lotus Notes vers la plateforme DHIS2 moderne pour la Plateforme de Surveillance et d'Analyse de la Santé du CICR.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Solution</h4>
+                                <p>Dirigé la migration complète du système sans perte de données, implémenté des pipelines ETL et assuré une transition fluide pour les opérations de terrain.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Impact</h4>
+                                <p>Rationalisé la surveillance de la santé dans toutes les opérations du CICR, amélioré l'accessibilité des données et renforcé les capacités analytiques.</p>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">DHIS2</span>
+                                <span class="tech-tag">SSIS</span>
+                                <span class="tech-tag">Pipelines ETL</span>
+                                <span class="tech-tag">Migration de Données</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Déploiement DHIS2 Multi-Pays</h3>
+                            <p class="project-subtitle">Standardisation du Système de Santé ALIMA</p>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-details">
+                                <h4>Défi</h4>
+                                <p>Déployer une infrastructure DHIS2 unifiée dans 11 pays africains tout en maintenant les exigences de personnalisation locale.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Solution</h4>
+                                <p>Conçu une architecture évolutive, implémenté des configurations standardisées et fourni des programmes de formation complets.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Impact</h4>
+                                <p>Réalisé une collecte unifiée de données de santé en Afrique de l'Ouest, amélioré la collaboration inter-pays et la cohérence des rapports.</p>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">DHIS2</span>
+                                <span class="tech-tag">Infrastructure Cloud</span>
+                                <span class="tech-tag">Multi-tenant</span>
+                                <span class="tech-tag">Programmes de Formation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Gestion de Stock Pharmacie</h3>
+                            <p class="project-subtitle">Système d'Optimisation de Chaîne d'Approvisionnement</p>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-details">
+                                <h4>Défi</h4>
+                                <p>Améliorer la visibilité de la chaîne d'approvisionnement pharmaceutique et réduire les ruptures de stock dans les contextes de soins de santé humanitaires.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Solution</h4>
+                                <p>Construit un système de surveillance de stock en temps réel avec alertes automatisées, calculs de commandes et analyses prédictives.</p>
+                            </div>
+                            <div class="project-details">
+                                <h4>Impact</h4>
+                                <p>Réduit les ruptures de stock de 40%, amélioré la continuité des soins aux patients et optimisé les processus de gestion d'inventaire.</p>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">DHIS2</span>
+                                <span class="tech-tag">Intégration API</span>
+                                <span class="tech-tag">Analyses Temps Réel</span>
+                                <span class="tech-tag">Chaîne d'Approvisionnement</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <!-- English Skills -->
+            <div class="lang-content active" data-lang="en">
+                <h2 class="section-title">Technical Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Health Information Systems</h3>
+                        <ul class="skill-list">
+                            <li>DHIS2 Architecture & Configuration <span class="skill-level">Expert</span></li>
+                            <li>OpenMRS, CommCare, CHT <span class="skill-level">Advanced</span></li>
+                            <li>Health Data Standards (FHIR, HL7) <span class="skill-level">Advanced</span></li>
+                            <li>Medical Database Design <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Cloud & Infrastructure</h3>
+                        <ul class="skill-list">
+                            <li>Google Cloud Platform (ACE Certified) <span class="skill-level">Expert</span></li>
+                            <li>AWS & Azure <span class="skill-level">Advanced</span></li>
+                            <li>Kubernetes & OpenShift <span class="skill-level">Advanced</span></li>
+                            <li>Docker & DevOps <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Data & Integration</h3>
+                        <ul class="skill-list">
+                            <li>ETL Pipelines (SSIS, Apache Airflow) <span class="skill-level">Expert</span></li>
+                            <li>API Development & Integration <span class="skill-level">Expert</span></li>
+                            <li>OpenHIM, OpenFN <span class="skill-level">Advanced</span></li>
+                            <li>Database Management <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Development</h3>
+                        <ul class="skill-list">
+                            <li>JavaScript, Python, PHP <span class="skill-level">Expert</span></li>
+                            <li>React, AngularJS <span class="skill-level">Advanced</span></li>
+                            <li>CI/CD (Azure DevOps) <span class="skill-level">Expert</span></li>
+                            <li>Git & Version Control <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- French Skills -->
+            <div class="lang-content" data-lang="fr">
+                <h2 class="section-title">Expertise Technique</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Systèmes d'Information de Santé</h3>
+                        <ul class="skill-list">
+                            <li>Architecture & Configuration DHIS2 <span class="skill-level">Expert</span></li>
+                            <li>OpenMRS, CommCare, CHT <span class="skill-level">Avancé</span></li>
+                            <li>Standards de Données de Santé (FHIR, HL7) <span class="skill-level">Avancé</span></li>
+                            <li>Conception de Base de Données Médicales <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Cloud & Infrastructure</h3>
+                        <ul class="skill-list">
+                            <li>Google Cloud Platform (Certifié ACE) <span class="skill-level">Expert</span></li>
+                            <li>AWS & Azure <span class="skill-level">Avancé</span></li>
+                            <li>Kubernetes & OpenShift <span class="skill-level">Avancé</span></li>
+                            <li>Docker & DevOps <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Données & Intégration</h3>
+                        <ul class="skill-list">
+                            <li>Pipelines ETL (SSIS, Apache Airflow) <span class="skill-level">Expert</span></li>
+                            <li>Développement & Intégration API <span class="skill-level">Expert</span></li>
+                            <li>OpenHIM, OpenFN <span class="skill-level">Avancé</span></li>
+                            <li>Gestion de Base de Données <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Développement</h3>
+                        <ul class="skill-list">
+                            <li>JavaScript, Python, PHP <span class="skill-level">Expert</span></li>
+                            <li>React, AngularJS <span class="skill-level">Avancé</span></li>
+                            <li>CI/CD (Azure DevOps) <span class="skill-level">Expert</span></li>
+                            <li>Git & Contrôle de Version <span class="skill-level">Expert</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <!-- English Experience -->
+            <div class="lang-content active" data-lang="en">
+                <h2 class="section-title">Professional Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2021 - Present</div>
+                            <h3 class="timeline-title">Solution Architect - DHIS2 Technical Leader</h3>
+                            <div class="timeline-company">International Committee of Red Cross (ICRC)</div>
+                            <p class="timeline-description">Leading technical initiatives for health operations, including HeMAP migration project, pharmacy stock management system, and server infrastructure modernization. Responsible for ETL pipeline development and CI/CD implementation.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2019 - 2021</div>
+                            <h3 class="timeline-title">Health Information Systems Specialist</h3>
+                            <div class="timeline-company">IT4LIFE</div>
+                            <p class="timeline-description">Managed DHIS2 deployment across 11 countries for ALIMA, developed CommCare applications for Ebola response, and led COVID-19 patient database systems implementation. Provided technical leadership and training.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2015 - 2019</div>
+                            <h3 class="timeline-title">DHIS2 Technical Lead / IT Specialist</h3>
+                            <div class="timeline-company">Research Triangle Institute (RTI)</div>
+                            <p class="timeline-description">Designed and implemented national health information system for Guinea, developed disease surveillance modules, and managed Ebola response database. Led infrastructure audits and cloud services implementation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- French Experience -->
+            <div class="lang-content" data-lang="fr">
+                <h2 class="section-title">Parcours Professionnel</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2021 - Présent</div>
+                            <h3 class="timeline-title">Architecte de Solutions - Leader Technique DHIS2</h3>
+                            <div class="timeline-company">Comité International de la Croix-Rouge (CICR)</div>
+                            <p class="timeline-description">Diriger les initiatives techniques pour les opérations de santé, incluant le projet de migration HeMAP, le système de gestion de stock pharmaceutique et la modernisation de l'infrastructure serveur. Responsable du développement de pipelines ETL et de l'implémentation CI/CD.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2019 - 2021</div>
+                            <h3 class="timeline-title">Spécialiste en Systèmes d'Information de Santé</h3>
+                            <div class="timeline-company">IT4LIFE</div>
+                            <p class="timeline-description">Géré le déploiement DHIS2 dans 11 pays pour ALIMA, développé des applications CommCare pour la réponse Ebola et dirigé l'implémentation de systèmes de base de données patients COVID-19. Fourni leadership technique et formation.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2015 - 2019</div>
+                            <h3 class="timeline-title">Lead Technique DHIS2 / Spécialiste IT</h3>
+                            <div class="timeline-company">Research Triangle Institute (RTI)</div>
+                            <p class="timeline-description">Conçu et implémenté le système national d'information de santé pour la Guinée, développé des modules de surveillance des maladies et géré la base de données de réponse Ebola. Dirigé les audits d'infrastructure et l'implémentation de services cloud.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <!-- English Contact -->
+                <div class="lang-content active" data-lang="en">
+                    <h2 class="section-title" style="color: white;">Let's Work Together</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Ready to transform your health information system? Let's discuss how I can help you achieve your goals.</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <h4>Email</h4>
+                            <p>diallotafsir52@gmail.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Phone</h4>
+                            <p>+221 781453881</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Location</h4>
+                            <p>Dakar, Senegal</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Availability</h4>
+                            <p>Remote work globally</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-buttons" style="margin-top: 2rem;">
+                        <a href="mailto:diallotafsir52@gmail.com" class="btn btn-primary">Send Email</a>
+                        <a href="https://www.linkedin.com/in/diallotafsir52/" class="btn btn-secondary" target="_blank">LinkedIn Profile</a>
+                    </div>
+                </div>
+
+                <!-- French Contact -->
+                <div class="lang-content" data-lang="fr">
+                    <h2 class="section-title" style="color: white;">Travaillons Ensemble</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Prêt à transformer votre système d'information de santé ? Discutons de la façon dont je peux vous aider à atteindre vos objectifs.</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <h4>Email</h4>
+                            <p>diallotafsir52@gmail.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Téléphone</h4>
+                            <p>+221 781453881</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Localisation</h4>
+                            <p>Dakar, Sénégal</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Disponibilité</h4>
+                            <p>Travail à distance mondial</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-buttons" style="margin-top: 2rem;">
+                        <a href="mailto:diallotafsir52@gmail.com" class="btn btn-primary">Envoyer un Email</a>
+                        <a href="https://www.linkedin.com/in/diallotafsir52/" class="btn btn-secondary" target="_blank">Profil LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <!-- English Footer -->
+            <div class="lang-content active" data-lang="en">
+                <p>&copy; 2025 Mamadou Tafsir Diallo | DHIS2 Solution Architect | Health Information Systems Expert</p>
+            </div>
+            <!-- French Footer -->
+            <div class="lang-content" data-lang="fr">
+                <p>&copy; 2025 Mamadou Tafsir Diallo | Architecte de Solutions DHIS2 | Expert en Systèmes d'Information de Santé</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        let currentLanguage = 'en';
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            
+            // Hide all language content
+            document.querySelectorAll('.lang-content').forEach(content => {
+                content.classList.remove('active');
+                content.classList.remove('flex', 'grid');
+            });
+            
+            // Show content for selected language
+            document.querySelectorAll(`[data-lang="${lang}"]`).forEach(content => {
+                content.classList.add('active');
+                
+                // Restore specific display types
+                if (content.classList.contains('stats-bar') || content.classList.contains('cta-buttons')) {
+                    content.classList.add('flex');
+                }
+                if (content.classList.contains('about-grid') || content.classList.contains('projects-grid') || content.classList.contains('skills-grid')) {
+                    content.classList.add('grid');
+                }
+            });
+            
+            // Update document language attribute
+            document.documentElement.lang = lang;
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and timeline items
+        document.querySelectorAll('.about-card, .project-card, .skill-category, .timeline-item').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 30px rgba(0,0,0,0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // Mobile menu toggle
+        const createMobileMenu = () => {
+            if (window.innerWidth <= 768) {
+                const existingToggle = document.querySelector('.mobile-toggle');
+                if (existingToggle) return;
+
+                const navMenus = document.querySelectorAll('.nav-menu');
+                navMenus.forEach(nav => nav.style.display = 'none');
+                
+                const mobileToggle = document.createElement('button');
+                mobileToggle.className = 'mobile-toggle';
+                mobileToggle.innerHTML = '☰';
+                mobileToggle.style.cssText = `
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    color: #2563eb;
+                    cursor: pointer;
+                `;
+                
+                mobileToggle.addEventListener('click', () => {
+                    const activeNav = document.querySelector(`.nav-menu[data-lang="${currentLanguage}"]`);
+                    if (activeNav) {
+                        const isVisible = activeNav.style.display === 'flex';
+                        navMenus.forEach(nav => nav.style.display = 'none');
+                        
+                        if (!isVisible) {
+                            activeNav.style.display = 'flex';
+                            activeNav.style.flexDirection = 'column';
+                            activeNav.style.position = 'absolute';
+                            activeNav.style.top = '100%';
+                            activeNav.style.left = '0';
+                            activeNav.style.right = '0';
+                            activeNav.style.background = 'white';
+                            activeNav.style.padding = '1rem';
+                            activeNav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                            activeNav.style.zIndex = '999';
+                        }
+                    }
+                });
+                
+                document.querySelector('.nav-container').appendChild(mobileToggle);
+            } else {
+                const mobileToggle = document.querySelector('.mobile-toggle');
+                if (mobileToggle) {
+                    mobileToggle.remove();
+                    document.querySelectorAll('.nav-menu').forEach(nav => {
+                        nav.style.display = '';
+                        nav.style.flexDirection = '';
+                        nav.style.position = '';
+                        nav.style.top = '';
+                        nav.style.left = '';
+                        nav.style.right = '';
+                        nav.style.background = '';
+                        nav.style.padding = '';
+                        nav.style.boxShadow = '';
+                        nav.style.zIndex = '';
+                    });
+                }
+            }
+        };
+
+        // Initialize mobile menu on load and resize
+        createMobileMenu();
+        window.addEventListener('resize', createMobileMenu);
+
+        // Typing effect for hero subtitle
+        const typeWriter = (element, text, speed = 100) => {
+            let i = 0;
+            element.innerHTML = '';
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(timer);
+                }
+            }, speed);
+        };
+
+        // Initialize typing effect after page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const activeSubtitle = document.querySelector(`.hero-subtitle[data-lang="${currentLanguage}"]`);
+                if (activeSubtitle) {
+                    const originalText = activeSubtitle.textContent;
+                    typeWriter(activeSubtitle, originalText, 50);
+                }
+            }, 1000);
+        });
+
+        // Update typing effect when language changes
+        const originalSwitchLanguage = switchLanguage;
+        switchLanguage = function(lang) {
+            originalSwitchLanguage(lang);
+            
+            // Restart typing effect for new language
+            setTimeout(() => {
+                const newSubtitle = document.querySelector(`.hero-subtitle[data-lang="${lang}"]`);
+                if (newSubtitle) {
+                    const originalText = newSubtitle.getAttribute('data-original-text') || newSubtitle.textContent;
+                    if (!newSubtitle.getAttribute('data-original-text')) {
+                        newSubtitle.setAttribute('data-original-text', originalText
