@@ -20,7 +20,7 @@ interface FooterSection {
 }
 
 const Footer: React.FC = () => {
-  const { t, currentLanguage } = useLanguage();
+  const { currentLanguage } = useLanguage();
 
   const socialLinks: SocialLink[] = [
     {

@@ -25,7 +25,7 @@ interface SkillItemProps {
 }
 
 const SkillItem: React.FC<SkillItemProps> = ({ skill, categoryColor, delay = 0 }) => {
-  const { t, currentLanguage } = useLanguage();
+  const { currentLanguage } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const itemRef = useRef<HTMLLIElement>(null);
@@ -144,7 +144,7 @@ const SkillCategoryCard: React.FC<{
   onClick: () => void;
   delay?: number;
 }> = ({ category, isActive, onClick, delay = 0 }) => {
-  const { t } = useLanguage();
+  const { currentLanguage } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -169,6 +169,16 @@ const SkillCategoryCard: React.FC<{
     };
   }, [delay]);
 
+  const getCategoryTitle = (titleKey: string) => {
+    const titles = {
+      'skills.health.title': currentLanguage === 'fr' ? 'Systèmes d\'Information de Santé' : 'Health Information Systems',
+      'skills.cloud.title': currentLanguage === 'fr' ? 'Cloud & Infrastructure' : 'Cloud & Infrastructure',
+      'skills.data.title': currentLanguage === 'fr' ? 'Données & Intégration' : 'Data & Integration',
+      'skills.development.title': currentLanguage === 'fr' ? 'Développement' : 'Development'
+    };
+    return titles[titleKey as keyof typeof titles] || titleKey;
+  };
+
   return (
     <div 
       ref={cardRef}
@@ -182,7 +192,7 @@ const SkillCategoryCard: React.FC<{
         >
           <span>{category.icon}</span>
         </div>
-        <h3>{t(category.titleKey)}</h3>
+        <h3>{getCategoryTitle(category.titleKey)}</h3>
         <div className="skill-count">
           {category.skills.length} {category.skills.length === 1 ? 'skill' : 'skills'}
         </div>
@@ -222,7 +232,7 @@ const SkillCategoryCard: React.FC<{
 };
 
 const Skills: React.FC = () => {
-  const { t, currentLanguage } = useLanguage();
+  const { currentLanguage } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -422,7 +432,9 @@ const Skills: React.FC = () => {
     <section id="skills" className="skills" ref={sectionRef}>
       <div className="container">
         <div className={`section-header ${isInView ? 'visible' : ''}`}>
-          <h2 className="section-title">{t('skills.title')}</h2>
+          <h2 className="section-title">
+            {currentLanguage === 'fr' ? 'Expertise Technique' : 'Technical Expertise'}
+          </h2>
           <p className="section-subtitle">
             {currentLanguage === 'fr' 
               ? 'Une expertise technique approfondie au service de la santé mondiale'
