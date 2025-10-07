@@ -78,22 +78,55 @@ const Footer: React.FC = () => {
           gap: 1rem;
         }
 
-        .footer-logo {
+        .footer-profile {
           display: flex;
           align-items: center;
-          gap: 0.8rem;
+          gap: 1rem;
           margin-bottom: 1rem;
         }
 
-        .logo-icon {
-          font-size: 2rem;
-          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        .footer-profile-image {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          object-fit: cover;
+          object-position: center;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          box-shadow: 
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            0 8px 25px rgba(0, 0, 0, 0.3);
+          transition: all 0.3s ease;
+          filter: brightness(1.1) contrast(1.05);
         }
 
-        .logo-text {
-          font-size: 1.5rem;
+        .footer-profile-image:hover {
+          transform: scale(1.05);
+          border-color: rgba(255, 255, 255, 0.5);
+          box-shadow: 
+            0 0 0 1px rgba(255, 255, 255, 0.2),
+            0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .footer-profile-info {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+        }
+
+        .footer-name {
+          font-size: 1.4rem;
           font-weight: 700;
           color: white;
+          margin: 0;
+          line-height: 1.2;
+        }
+
+        .footer-title {
+          font-size: 0.9rem;
+          color: #94a3b8;
+          font-weight: 500;
+          margin: 0;
+          line-height: 1.2;
         }
 
         .footer-tagline {
@@ -364,8 +397,24 @@ const Footer: React.FC = () => {
             padding: 0 1rem;
           }
           
-          .footer-logo {
+          .footer-profile {
             justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            gap: 0.8rem;
+          }
+          
+          .footer-profile-image {
+            width: 50px;
+            height: 50px;
+          }
+          
+          .footer-name {
+            font-size: 1.2rem;
+          }
+          
+          .footer-title {
+            font-size: 0.8rem;
           }
           
           .footer-brand {
@@ -377,16 +426,29 @@ const Footer: React.FC = () => {
       <footer className="streamlined-footer">
         <div className="footer-container">
           <div className="footer-main">
-            {/* Brand Section */}
+            {/* Brand Section with Photo */}
             <div className="footer-brand">
-              <div className="footer-logo">
-                <img src="/profile.jpg" alt="Mamadou Tafsir Diallo" className="footer-profile-img" />
-                <span className="logo-text">Mamadou Tafsir Diallo</span>
+              <div className="footer-profile">
+                <img 
+                  src="/profile.jpg" 
+                  alt="Mamadou Tafsir Diallo - DHIS2 Solution Architect"
+                  className="footer-profile-image"
+                  loading="lazy"
+                />
+                <div className="footer-profile-info">
+                  <h3 className="footer-name">Mamadou Tafsir Diallo</h3>
+                  <p className="footer-title">
+                    {currentLanguage === 'fr' 
+                      ? 'Architecte de Solutions DHIS2'
+                      : 'DHIS2 Solution Architect'
+                    }
+                    <span className="stat-number">10+</span>
+                </div>
               </div>
               <p className="footer-tagline">
-                {currentLanguage === 'fr' 
-                  ? 'Architecte de Solutions DHIS2 | Expert en Systèmes d\'Information de Santé'
-                  : 'DHIS2 Solution Architect | Health Information Systems Expert'
+                {currentLanguage === 'fr'
+                  ? 'Expert en Systèmes d\'Information de Santé | 9+ années d\'expérience'
+                  : 'Health Information Systems Expert | 9+ years experience'
                 }
               </p>
               <p className="footer-description">
