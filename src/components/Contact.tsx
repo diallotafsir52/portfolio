@@ -382,7 +382,7 @@ const Contact: React.FC = () => {
         <div className="contact-content">
           <div className="contact-info">
             <div className="contact-methods">
-              {contactMethods.map((method, index) => (
+              {contactMethods.map((method) => (
                 <a
                   key={method.id}
                   href={method.href}
