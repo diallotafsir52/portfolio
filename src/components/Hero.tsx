@@ -1,193 +1,94 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-
-interface StatItemProps {
-  number: string;
-  label: string;
-  delay?: number;
-}
-
-const StatItem: React.FC<StatItemProps> = ({ number, label, delay = 0 }) => {
-  const [displayNumber, setDisplayNumber] = useState('0');
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-      
-      // Animate number counting
-      const targetNum = parseInt(number.replace(/\D/g, ''));
-      const suffix = number.replace(/\d/g, '');
-      let current = 0;
-      const increment = targetNum / 20;
-      
-      const counter = setInterval(() => {
-        current += increment;
-        if (current >= targetNum) {
-          setDisplayNumber(number);
-          clearInterval(counter);
-        } else {
-          setDisplayNumber(Math.floor(current) + suffix);
-        }
-      }, 50);
-      
-      return () => clearInterval(counter);
-    }, delay);
-
-    return () => clearTimeout(timer);
-  }, [number, delay]);
-
-  return (
-    <div className={`stat-item ${isVisible ? 'visible' : ''}`}>
-      <span className="stat-number">{displayNumber}</span>
-      <span className="stat-label">{label}</span>
-    </div>
-  );
-};
 
 const Hero: React.FC = () => {
   const { t, currentLanguage } = useLanguage();
-  const [typedText, setTypedText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [showCursor, setShowCursor] = useState(true);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const subtitle = t('hero.subtitle');
-
-  // Typing effect
   useEffect(() => {
-    setIsTyping(true);
-    setTypedText('');
-    
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < subtitle.length) {
-        setTypedText(subtitle.slice(0, i + 1));
-        i++;
-      } else {
-        setIsTyping(false);
-        clearInterval(timer);
-      }
-    }, 50);
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
 
-    return () => clearInterval(timer);
-  }, [subtitle]);
-
-  // Cursor blinking effect
-  useEffect(() => {
-    const cursorTimer = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-
-    return () => clearInterval(cursorTimer);
-  }, []);
-
-  const scrollToSection = useCallback((sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerHeight = 80;
-      const elementPosition = element.offsetTop - headerHeight;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
   }, []);
-
-  const handleDownloadResume = () => {
-    // You can add a resume download link here
-    const resumeUrl = '/assets/resume_mamadou_tafsir_diallo.pdf';
-    const link = document.createElement('a');
-    link.href = resumeUrl;
-    link.download = 'Mamadou_Tafsir_Diallo_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const statsData = [
-    { number: '9+', labelKey: 'hero.stats.years', delay: 0 },
-    { number: '11+', labelKey: 'hero.stats.countries', delay: 200 },
-    { number: '100+', labelKey: 'hero.stats.facilities', delay: 400 },
-    { number: '3', labelKey: 'hero.stats.organizations', delay: 600 }
-  ];
 
   return (
-    <section id="home" className="hero">
-      <div className="hero-background">
-        <div className="hero-shape hero-shape-1"></div>
-        <div className="hero-shape hero-shape-2"></div>
-        <div className="hero-shape hero-shape-3"></div>
-      </div>
-      
+    <section id="home" className="hero" ref={sectionRef}>
       <div className="hero-content">
-        <div className="hero-intro">
-          <h1 className="hero-title">
-            <span className="hero-greeting">
-              {currentLanguage === 'fr' ? 'Bonjour, je suis' : 'Hello, I\'m'}
-            </span>
-            <span className="hero-name">{t('hero.title')}</span>
-          </h1>
-          
-          <div className="hero-subtitle-container">
-            <span className="hero-subtitle">
-              {typedText}
-              {(isTyping || showCursor) && <span className="cursor">|</span>}
-            </span>
-          </div>
-          
-          <div className="hero-description">
-            <p>"{t('hero.description')}"</p>
-          </div>
-        </div>
-        
-        <div className="stats-bar">
-          {statsData.map((stat, index) => (
-            <StatItem
-              key={index}
-              number={stat.number}
-              label={t(stat.labelKey)}
-              delay={stat.delay}
+        {/* Profile Image Section */}
+        <div className="hero-profile">
+          <div className="profile-image-container">
+            <img 
+              src="/profile.jpg" 
+              alt="Mamadou Tafsir Diallo - DHIS2 Solution Architect"
+              className="profile-image"
+              loading="eager"
             />
-          ))}
-        </div>
-        
-        <div className="cta-buttons">
-          <button 
-            className="btn btn-primary"
-            onClick={() => scrollToSection('projects')}
-            aria-label={t('hero.cta.work')}
-          >
-            <span className="btn-icon">📊</span>
-            <span>{t('hero.cta.work')}</span>
-          </button>
-          
-          <button 
-            className="btn btn-secondary"
-            onClick={() => scrollToSection('contact')}
-            aria-label={t('hero.cta.contact')}
-          >
-            <span className="btn-icon">💬</span>
-            <span>{t('hero.cta.contact')}</span>
-          </button>
-          
-          <button 
-            className="btn btn-outline"
-            onClick={handleDownloadResume}
-            aria-label="Download Resume"
-          >
-            <span className="btn-icon">📄</span>
-            <span>{currentLanguage === 'fr' ? 'Télécharger CV' : 'Download Resume'}</span>
-          </button>
+            <div className="profile-badge">
+              <span className="status-indicator"></span>
+              <span className="status-text">
+                {currentLanguage === 'fr' ? 'Disponible' : 'Available'}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <div className="hero-scroll-indicator">
-          <div className="scroll-arrow">
-            <span></span>
-            <span></span>
-            <span></span>
+        <h1>Mamadou Tafsir Diallo</h1>
+        
+        <div className={`hero-text ${isInView ? 'visible' : ''}`}>
+          <div className="hero-subtitle">{t('hero.title')}</div>
+          <div className="hero-description">"{t('hero.subtitle')}"</div>
+          
+          <div className="stats-bar">
+            <div className="stat-item">
+              <span className="stat-number">9+</span>
+              <span className="stat-label">
+                {currentLanguage === 'fr' ? 'Années d\'Expérience' : 'Years Experience'}
+              </span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">11+</span>
+              <span className="stat-label">
+                {currentLanguage === 'fr' ? 'Pays Déployés' : 'Countries Deployed'}
+              </span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">100+</span>
+              <span className="stat-label">
+                {currentLanguage === 'fr' ? 'Centres de Santé' : 'Health Facilities'}
+              </span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">3</span>
+              <span className="stat-label">
+                {currentLanguage === 'fr' ? 'Grandes Organisations' : 'Major Organizations'}
+              </span>
+            </div>
           </div>
-          <p>{currentLanguage === 'fr' ? 'Défiler vers le bas' : 'Scroll down'}</p>
+          
+          <div className="cta-buttons">
+            <a href="#projects" className="btn btn-primary">{t('hero.cta.work')}</a>
+            <a href="#contact" className="btn btn-secondary">{t('hero.cta.contact')}</a>
+          </div>
+        </div>
+
+        {/* Floating Elements */}
+        <div className="hero-decorations">
+          <div className="floating-icon icon-1">🏥</div>
+          <div className="floating-icon icon-2">📊</div>
+          <div className="floating-icon icon-3">☁️</div>
+          <div className="floating-icon icon-4">🌍</div>
         </div>
       </div>
     </section>
