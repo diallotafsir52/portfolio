@@ -1,6 +1,7 @@
 import React from 'react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Header from './components/Header';
+import LanguageToggle from './components/LanguageToggle';
 import Hero from './components/Hero';
 import About from './components/About';
 import Projects from './components/Projects';
@@ -15,8 +16,9 @@ const App: React.FC = () => {
   return (
     <LanguageProvider>
       <div className="App">
-        <ProgressBar />
-        <Header />
+  <ProgressBar />
+  <LanguageToggle />
+  <Header />
         <main>
           <Hero />
           <About />

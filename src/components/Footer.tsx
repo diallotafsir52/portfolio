@@ -8,17 +8,6 @@ interface SocialLink {
   label: string;
 }
 
-interface FooterLink {
-  label: string;
-  href: string;
-  external?: boolean;
-}
-
-interface FooterSection {
-  titleKey: string;
-  links: FooterLink[];
-}
-
 const Footer: React.FC = () => {
   const { currentLanguage } = useLanguage();
 
@@ -49,74 +38,6 @@ const Footer: React.FC = () => {
     }
   ];
 
-  const footerSections: FooterSection[] = [
-    {
-      titleKey: 'footer.services.title',
-      links: [
-        {
-          label: currentLanguage === 'fr' ? 'Architecture DHIS2' : 'DHIS2 Architecture',
-          href: '#projects'
-        },
-        {
-          label: currentLanguage === 'fr' ? 'Migration de données' : 'Data Migration',
-          href: '#projects'
-        },
-        {
-          label: currentLanguage === 'fr' ? 'Intégration systèmes' : 'System Integration',
-          href: '#projects'
-        },
-        {
-          label: currentLanguage === 'fr' ? 'Formation & support' : 'Training & Support',
-          href: '#contact'
-        }
-      ]
-    },
-    {
-      titleKey: 'footer.expertise.title',
-      links: [
-        {
-          label: 'DHIS2',
-          href: '#skills'
-        },
-        {
-          label: currentLanguage === 'fr' ? 'Cloud Computing' : 'Cloud Computing',
-          href: '#skills'
-        },
-        {
-          label: currentLanguage === 'fr' ? 'Pipelines ETL' : 'ETL Pipelines',
-          href: '#skills'
-        },
-        {
-          label: 'DevOps & CI/CD',
-          href: '#skills'
-        }
-      ]
-    },
-    {
-      titleKey: 'footer.resources.title',
-      links: [
-        {
-          label: currentLanguage === 'fr' ? 'Portfolio complet' : 'Full Portfolio',
-          href: '#projects'
-        },
-        {
-          label: currentLanguage === 'fr' ? 'Études de cas' : 'Case Studies',
-          href: '#projects',
-          external: true
-        },
-        {
-          label: currentLanguage === 'fr' ? 'Certifications' : 'Certifications',
-          href: '#skills'
-        },
-        {
-          label: 'CV (PDF)',
-          href: '/cv-tafsir-diallo.pdf',
-          external: true
-        }
-      ]
-    }
-  ];
-
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -127,15 +48,339 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="footer">
-      <div className="container">
-        <div className="footer-content">
-          {/* Main Footer Content */}
+    <>
+      <style jsx>{`
+        .streamlined-footer {
+          background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+          color: white;
+          position: relative;
+          overflow: hidden;
+          padding: 3rem 0 1.5rem;
+        }
+
+        .footer-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 2rem;
+        }
+
+        .footer-main {
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr;
+          gap: 3rem;
+          margin-bottom: 2rem;
+          align-items: start;
+        }
+
+        .footer-brand {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .footer-logo {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          margin-bottom: 1rem;
+        }
+
+        .logo-icon {
+          font-size: 2rem;
+          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: white;
+        }
+
+        .footer-tagline {
+          font-size: 1rem;
+          color: #94a3b8;
+          margin-bottom: 0.5rem;
+          line-height: 1.5;
+        }
+
+        .footer-description {
+          color: #cbd5e1;
+          line-height: 1.6;
+          font-size: 0.9rem;
+          max-width: 400px;
+        }
+
+        .credentials-section {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .credentials-title {
+          font-size: 1rem;
+          font-weight: 600;
+          color: white;
+          margin-bottom: 0.5rem;
+        }
+
+        .credentials-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .credential-item {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.8rem;
+          color: #cbd5e1;
+        }
+
+        .credential-icon {
+          font-size: 1rem;
+          flex-shrink: 0;
+        }
+
+        .quick-links {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .quick-links-title {
+          font-size: 1rem;
+          font-weight: 600;
+          color: white;
+          margin-bottom: 0.5rem;
+        }
+
+        .links-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .quick-link {
+          color: #cbd5e1;
+          text-decoration: none;
+          font-size: 0.9rem;
+          transition: all 0.3s ease;
+          padding: 0.2rem 0;
+        }
+
+        .quick-link:hover {
+          color: #60a5fa;
+          transform: translateX(3px);
+        }
+
+        .social-links {
+          display: flex;
+          gap: 0.8rem;
+          margin-top: 1.5rem;
+        }
+
+        .social-link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 10px;
+          color: white;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          font-size: 1.1rem;
+        }
+
+        .social-link:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .footer-bottom {
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 1.5rem 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .copyright {
+          color: #94a3b8;
+          font-size: 0.85rem;
+        }
+
+        .footer-meta {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+        }
+
+        .availability-status {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .status-indicator {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #10b981;
+          animation: pulse-availability 2s infinite;
+        }
+
+        @keyframes pulse-availability {
+          0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+          }
+        }
+
+        .status-text {
+          color: #cbd5e1;
+          font-size: 0.85rem;
+          font-weight: 500;
+        }
+
+        .back-to-top {
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: white;
+          padding: 0.4rem 0.8rem;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-size: 0.85rem;
+        }
+
+        .back-to-top:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: translateY(-2px);
+        }
+
+        .back-to-top-icon {
+          font-size: 0.9rem;
+          font-weight: bold;
+        }
+
+        /* Background Elements */
+        .footer-bg-elements {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .bg-shape {
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.02);
+          animation: float-shape 20s ease-in-out infinite;
+        }
+
+        .bg-shape-1 {
+          width: 150px;
+          height: 150px;
+          top: 20%;
+          right: 10%;
+          animation-delay: 0s;
+        }
+
+        .bg-shape-2 {
+          width: 100px;
+          height: 100px;
+          bottom: 30%;
+          left: 15%;
+          animation-delay: 7s;
+        }
+
+        @keyframes float-shape {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-15px) rotate(180deg);
+          }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+          .footer-main {
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+          }
+          
+          .credentials-section {
+            grid-column: span 2;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .streamlined-footer {
+            padding: 2rem 0 1rem;
+          }
+          
+          .footer-main {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+          
+          .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+            gap: 1rem;
+          }
+          
+          .footer-meta {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          
+          .social-links {
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .footer-container {
+            padding: 0 1rem;
+          }
+          
+          .footer-logo {
+            justify-content: center;
+          }
+          
+          .footer-brand {
+            text-align: center;
+          }
+        }
+      `}</style>
+
+      <footer className="streamlined-footer">
+        <div className="footer-container">
           <div className="footer-main">
             {/* Brand Section */}
             <div className="footer-brand">
               <div className="footer-logo">
-                <span className="logo-icon">🏥</span>
+                <img src="/profile.jpg" alt="Mamadou Tafsir Diallo" className="footer-profile-img" />
                 <span className="logo-text">Mamadou Tafsir Diallo</span>
               </div>
               <p className="footer-tagline">
@@ -151,28 +396,6 @@ const Footer: React.FC = () => {
                 }
               </p>
 
-              {/* Quick Stats */}
-              <div className="footer-stats">
-                <div className="stat-item">
-                  <span className="stat-number">9+</span>
-                  <span className="stat-label">
-                    {currentLanguage === 'fr' ? 'Années' : 'Years'}
-                  </span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-number">11+</span>
-                  <span className="stat-label">
-                    {currentLanguage === 'fr' ? 'Pays' : 'Countries'}
-                  </span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-number">3</span>
-                  <span className="stat-label">
-                    {currentLanguage === 'fr' ? 'ONG Internationales' : 'International NGOs'}
-                  </span>
-                </div>
-              </div>
-
               {/* Social Links */}
               <div className="social-links">
                 {socialLinks.map((social) => (
@@ -185,126 +408,77 @@ const Footer: React.FC = () => {
                     aria-label={social.label}
                     title={social.label}
                   >
-                    <span className="social-icon">{social.icon}</span>
+                    <span>{social.icon}</span>
                   </a>
                 ))}
               </div>
             </div>
 
-            {/* Footer Sections */}
-            <div className="footer-sections">
-              {footerSections.map((section, index) => (
-                <div key={index} className="footer-section">
-                  <h4 className="section-title">
-                    {section.titleKey === 'footer.services.title' && (currentLanguage === 'fr' ? 'Services' : 'Services')}
-                    {section.titleKey === 'footer.expertise.title' && (currentLanguage === 'fr' ? 'Expertise' : 'Expertise')}
-                    {section.titleKey === 'footer.resources.title' && (currentLanguage === 'fr' ? 'Ressources' : 'Resources')}
-                  </h4>
-                  <ul className="section-links">
-                    {section.links.map((link, linkIndex) => (
-                      <li key={linkIndex}>
-                        <a
-                          href={link.href}
-                          target={link.external ? '_blank' : undefined}
-                          rel={link.external ? 'noopener noreferrer' : undefined}
-                          className="footer-link"
-                          onClick={(e) => {
-                            if (!link.external && link.href.startsWith('#')) {
-                              e.preventDefault();
-                              const element = document.querySelector(link.href);
-                              if (element) {
-                                element.scrollIntoView({ behavior: 'smooth' });
-                              }
-                            }
-                          }}
-                        >
-                          {link.label}
-                          {link.external && <span className="external-icon">↗</span>}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+            {/* Quick Links */}
+            <div className="quick-links">
+              <h4 className="quick-links-title">
+                {currentLanguage === 'fr' ? 'Navigation' : 'Quick Links'}
+              </h4>
+              <div className="links-list">
+                <a href="#about" className="quick-link">
+                  {currentLanguage === 'fr' ? 'À Propos' : 'About'}
+                </a>
+                <a href="#projects" className="quick-link">
+                  {currentLanguage === 'fr' ? 'Projets' : 'Projects'}
+                </a>
+                <a href="#skills" className="quick-link">
+                  {currentLanguage === 'fr' ? 'Compétences' : 'Skills'}
+                </a>
+                <a href="#experience" className="quick-link">
+                  {currentLanguage === 'fr' ? 'Expérience' : 'Experience'}
+                </a>
+                <a href="#contact" className="quick-link">
+                  {currentLanguage === 'fr' ? 'Contact' : 'Contact'}
+                </a>
+              </div>
+            </div>
+
+            {/* Certifications */}
+            <div className="credentials-section">
+              <h4 className="credentials-title">
+                {currentLanguage === 'fr' ? 'Certifications' : 'Certifications'}
+              </h4>
+              <div className="credentials-list">
+                <div className="credential-item">
+                  <span className="credential-icon">🏆</span>
+                  <span>Google Cloud ACE Certified</span>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Contact CTA */}
-          <div className="footer-cta">
-            <div className="cta-content">
-              <h3 className="cta-title">
-                {currentLanguage === 'fr' 
-                  ? 'Prêt à démarrer votre projet ?'
-                  : 'Ready to start your project?'
-                }
-              </h3>
-              <p className="cta-description">
-                {currentLanguage === 'fr'
-                  ? 'Contactez-moi pour discuter de vos besoins en systèmes d\'information de santé.'
-                  : 'Get in touch to discuss your health information system needs.'
-                }
-              </p>
-              <div className="cta-buttons">
-                <a 
-                  href="mailto:diallotafsir52@gmail.com"
-                  className="btn btn-primary"
-                >
-                  📧 {currentLanguage === 'fr' ? 'Contactez-moi' : 'Contact Me'}
-                </a>
-                <a 
-                  href="https://calendly.com/diallotafsir52/30min"
-                  className="btn btn-secondary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  📅 {currentLanguage === 'fr' ? 'Planifier un appel' : 'Schedule Call'}
-                </a>
+                <div className="credential-item">
+                  <span className="credential-icon">🎓</span>
+                  <span>DHIS2 Level 1 Certified</span>
+                </div>
+                <div className="credential-item">
+                  <span className="credential-icon">📱</span>
+                  <span>DHIS2 Android Implementation</span>
+                </div>
+                <div className="credential-item">
+                  <span className="credential-icon">🔬</span>
+                  <span>DHIS2 Disease Surveillance</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Certifications & Credentials */}
-          <div className="footer-credentials">
-            <h4 className="credentials-title">
-              {currentLanguage === 'fr' ? 'Certifications & Accréditations' : 'Certifications & Credentials'}
-            </h4>
-            <div className="credentials-list">
-              <div className="credential-item">
-                <span className="credential-icon">🏆</span>
-                <span className="credential-text">Google Cloud Certified - Associate Cloud Engineer</span>
-              </div>
-              <div className="credential-item">
-                <span className="credential-icon">🎓</span>
-                <span className="credential-text">DHIS2 Level 1 Certified - Oslo University</span>
-              </div>
-              <div className="credential-item">
-                <span className="credential-icon">📱</span>
-                <span className="credential-text">DHIS2 Android Implementation Certified</span>
-              </div>
-              <div className="credential-item">
-                <span className="credential-icon">🔬</span>
-                <span className="credential-text">DHIS2 Disease Surveillance Certified</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer Bottom */}
-        <div className="footer-bottom">
-          <div className="footer-bottom-content">
+          {/* Footer Bottom */}
+          <div className="footer-bottom">
             <div className="copyright">
               <p>
                 &copy; {currentYear} Mamadou Tafsir Diallo. 
                 {currentLanguage === 'fr' 
-                  ? ' Tous droits réservés. Fait avec passion pour la santé mondiale.'
-                  : ' All rights reserved. Made with passion for global health.'
+                  ? ' Tous droits réservés.'
+                  : ' All rights reserved.'
                 }
               </p>
             </div>
 
             <div className="footer-meta">
               <div className="availability-status">
-                <span className="status-indicator online"></span>
+                <span className="status-indicator"></span>
                 <span className="status-text">
                   {currentLanguage === 'fr' ? 'Disponible pour nouveaux projets' : 'Available for new projects'}
                 </span>
@@ -316,22 +490,19 @@ const Footer: React.FC = () => {
                 aria-label={currentLanguage === 'fr' ? 'Retour en haut' : 'Back to top'}
               >
                 <span className="back-to-top-icon">↑</span>
-                <span className="back-to-top-text">
-                  {currentLanguage === 'fr' ? 'Haut' : 'Top'}
-                </span>
+                <span>{currentLanguage === 'fr' ? 'Haut' : 'Top'}</span>
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Background Elements */}
-        <div className="footer-bg-elements">
-          <div className="bg-shape bg-shape-1"></div>
-          <div className="bg-shape bg-shape-2"></div>
-          <div className="bg-shape bg-shape-3"></div>
+          {/* Background Elements */}
+          <div className="footer-bg-elements">
+            <div className="bg-shape bg-shape-1"></div>
+            <div className="bg-shape bg-shape-2"></div>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 

@@ -53,16 +53,11 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className={`header ${isScrolled ? 'scrolled' : ''}`} style={{padding: isScrolled ? '0.5rem 0' : '0.5rem 0'}}>
       <div className="nav-container">
-        <div 
-          className="logo"
-          onClick={() => scrollToSection('home')}
-          style={{ cursor: 'pointer' }}
-        >
-          Mamadou Tafsir Diallo
-        </div>
-        
+        {/* Logo remplacé par un espace vide pour garder l'alignement */}
+        <div className="logo" style={{ minWidth: 40 }}></div>
+
         {/* Desktop Navigation */}
         <nav className="desktop-nav">
           <ul className="nav-menu">
@@ -75,7 +70,7 @@ const Header: React.FC = () => {
                     scrollToSection(id); 
                   }}
                 >
-                  {t(key)}
+                  {id === 'home' ? t('nav.home') : t(key)}
                 </a>
               </li>
             ))}
@@ -112,7 +107,7 @@ const Header: React.FC = () => {
                       scrollToSection(id); 
                     }}
                   >
-                    {t(key)}
+                    {id === 'home' ? t('nav.home') : t(key)}
                   </a>
                 </li>
               ))}
